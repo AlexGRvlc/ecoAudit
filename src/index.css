@@ -1,0 +1,6 @@
+@import "tailwindcss";
+/* Añade esta línea para habilitar el modo oscuro por clase */
+@variant dark (&:where(.dark, .dark *));
+
+/* Añade esta línea para habilitar el modo claro por clase */
+@variant light (&:where(.light, .light *));
