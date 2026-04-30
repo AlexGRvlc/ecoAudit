@@ -29,6 +29,14 @@ export default function App() {
     }
   }, [isDarkMode]);
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isMobileMenuOpen]);
+
   const hasResults = Object.keys(savedAnswers).length > 0;
 
   const navigateTo = (view) => {
@@ -86,7 +94,7 @@ export default function App() {
 
       {/* Sidebar Desktop[cite: 1] */}
       <aside className={`
-        fixed inset-y-0 left-0 z-40 w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform transition-transform duration-300 ease-in-out
+        fixed top-[50px] bottom-0 left-0 z-40 w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform transition-transform duration-300 ease-in-out
         md:translate-x-0 md:static md:flex-shrink-0 flex flex-col print:hidden
         ${isMobileMenuOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'}
       `}>

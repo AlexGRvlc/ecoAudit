@@ -4,3 +4,44 @@
 
 /* Añade esta línea para habilitar el modo claro por clase */
 @variant light (&:where(.light, .light *));
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+
+  /* Forzamos que el grid de 1 columna (móvil) pase a 3 columnas en PDF */
+  .grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 1rem !important;
+  }
+
+  /* La tarjeta de score ocupa 1 columna, el gráfico 2 */
+  .grid > div:first-child {
+    grid-column: span 1 / span 1 !important;
+  }
+  
+  .grid > div:nth-child(2) {
+    grid-column: span 2 / span 2 !important;
+    height: 300px !important; /* Forzamos altura para Recharts */
+  }
+
+  /* Evitamos el salto de página en el resumen */
+  .print-break-avoid {
+    break-inside: avoid;
+  }
+
+  /* Ajuste de escala global para asegurar que entre en una página */
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    zoom: 0.9; /* Truco de arquitectura para ganar margen de seguridad */
+  }
+
+  /* Ocultar elementos innecesarios */
+  .print-hidden {
+    display: none !important;
+  }
+}
