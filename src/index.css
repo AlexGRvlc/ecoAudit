@@ -5,43 +5,77 @@
 /* Añade esta línea para habilitar el modo claro por clase */
 @variant light (&:where(.light, .light *));
 
+
 @media print {
+  /* 1. CONFIGURACIÓN DE PÁGINA Y ESCALA */
   @page {
     size: A4 portrait;
-    margin: 10mm;
+    margin: 8mm; /* Margen ligeramente más estrecho para asegurar la página única */
   }
 
-  /* Forzamos que el grid de 1 columna (móvil) pase a 3 columnas en PDF */
-  .grid {
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 1rem !important;
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-scheme: light !important; /* Forzar esquema claro del navegador */
+    background: white !important;
+    color: black !important;
+    zoom: 0.85; /* Ajuste fino para garantizar que todo el contenido suba a la página 1 */
+    overflow: hidden; /* Evita que el navegador genere una página 2 en blanco por scroll */
   }
 
-  /* La tarjeta de score ocupa 1 columna, el gráfico 2 */
-  .grid > div:first-child {
-    grid-column: span 1 / span 1 !important;
-  }
-  
-  .grid > div:nth-child(2) {
-    grid-column: span 2 / span 2 !important;
-    height: 300px !important; /* Forzamos altura para Recharts */
+  /* 2. FORZADO DE MODO CLARO (Ahorro de tinta) */
+  /* Reset general para cualquier elemento dark: */
+  .dark, 
+  .dark div, 
+  .dark shadow,
+  [class*="bg-slate-"], 
+  [class*="bg-emerald-"] {
+    background-color: white !important;
+    color: #0f172a !important; /* slate-900 */
+    border-color: #e2e8f0 !important; /* slate-200 */
+    box-shadow: none !important;
   }
 
-  /* Evitamos el salto de página en el resumen */
+  /* Excepción para el cuadro de resumen: un gris muy tenue para diferenciarlo */
   .print-break-avoid {
+    background-color: #f8fafc !important; /* slate-50 */
+    border: 1px solid #e2e8f0 !important;
     break-inside: avoid;
   }
 
-  /* Ajuste de escala global para asegurar que entre en una página */
-  body {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-    zoom: 0.9; /* Truco de arquitectura para ganar margen de seguridad */
+  /* 3. RE-ESTRUCTURACIÓN DEL LAYOUT (Grid Horizontal) */
+  .grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
   }
 
-  /* Ocultar elementos innecesarios */
+  /* Score Card: 1 columna */
+  .grid > div:first-child {
+    grid-column: span 1 / span 1 !important;
+    padding: 1rem !important;
+  }
+
+  /* Radar Chart: 2 columnas */
+  .grid > div:nth-child(2) {
+    grid-column: span 2 / span 2 !important;
+    height: 280px !important; /* Reducimos ligeramente para asegurar espacio */
+    padding: 1rem !important;
+  }
+
+  /* 4. ELEMENTOS DE VISIBILIDAD */
   .print-hidden {
     display: none !important;
+  }
+
+  .hidden.print\:block {
+    display: block !important;
+  }
+
+  /* Forzar que los textos de Recharts sean oscuros */
+  .recharts-text {
+    fill: #475569 !important; /* slate-600 */
+    font-weight: 600 !important;
   }
 }
