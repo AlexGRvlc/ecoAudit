@@ -1,16 +1,60 @@
-# React + Vite
+# 🌱 ecoAudit
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web interactiva que evalúa las respuestas del usuario a un cuestionario de sostenibilidad/hábitos ecológicos, calificando el resultado en el momento a partir de un conjunto de datos en formato JSON que emula una base de datos.
 
-Currently, two official plugins are available:
+**🔗 Demo en producción:** [eco-audit-gamma.vercel.app](https://eco-audit-gamma.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ Características
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 📝 Cuestionario interactivo sobre hábitos/impacto ambiental
+- ⚙️ Motor de evaluación en el propio cliente: las respuestas se contrastan contra un JSON que simula una base de datos, sin necesidad de backend
+- 📊 Resultado calculado y mostrado al instante en la misma página
+- ⚡ Interfaz rápida y ligera gracias a Vite
 
-## Expanding the ESLint configuration
+## 🛠️ Stack tecnológico
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React** — librería de UI
+- **Vite** — bundler y servidor de desarrollo
+- **Tailwind CSS** — estilos utility-first
+- Datos locales en formato **JSON** como fuente de verdad para la evaluación (sin base de datos ni backend)
+
+## 🏗️ Estructura del proyecto
+
+```
+ecoAudit/
+├── public/
+├── src/
+│   ├── data/            # JSON con preguntas/reglas de evaluación
+│   ├── components/
+│   └── App.jsx
+├── tailwind.config.js
+└── vite.config.js
+```
+
+> Al ser una aplicación 100% cliente (sin servidor), toda la lógica de puntuación vive en el propio JavaScript del frontend, que compara las respuestas del usuario contra el JSON de datos y calcula el resultado final.
+
+## 🚀 Puesta en marcha local
+
+```bash
+npm install
+npm run dev
+```
+
+Para generar la build de producción:
+
+```bash
+npm run build
+```
+
+## 📌 Posibles mejoras futuras
+
+- Persistencia de resultados (localStorage o backend ligero)
+- Comparativa de resultados a lo largo del tiempo
+- Más categorías/preguntas de evaluación
+- Exportar o compartir el resultado obtenido
+
+## 👤 Autor
+
+**Alejandro Galera** — [GitHub](https://github.com/AlexGRvlc)
